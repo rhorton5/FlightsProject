@@ -1,0 +1,3 @@
+Questions about project
+
+#1 How should I distinguish flights and cruises without breaking AMS formatting rules.

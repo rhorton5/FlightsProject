@@ -1,0 +1,105 @@
+--- Creating Airport DEN---
+DEN was successfully added!
+
+--- Creating Airport DFW---
+DFW was successfully added!
+
+--- Creating Airport LON---
+LON was successfully added!
+
+--- Creating Airport DEN---
+DEN is already in the system.
+
+--- Creating Airport DENW---
+The name DENW has an invalid length of 4.
+
+--- Creating Airline DELTA---
+DELTA was successfully added!
+
+--- Creating Airline AMER---
+AMER was successfully added!
+
+--- Creating Airline FRONT---
+FRONT was successfully added!
+
+--- Creating Airline FRONTIER---
+The name FRONTIER has an invalid length of 8.
+
+--- Creating Airline FRONT---
+The airline FRONT already exists
+
+--- Creating Flight with Airline DELTA from DEN to LON ---
+Flight was added to DELTA
+
+--- Creating Flight with Airline DELTA from DEN to DEN ---
+The origin airport and the destination airport cannot be the same.
+
+--- Creating Flight with Airline DEL from DEN to LON ---
+DEL is not in the system currently.
+
+--- Creating Flight with Airline DELTA from LON33 to DEN33 ---
+LON33 is not in the system currently.
+LON33 is not a valid airport.
+
+--- Creating Flight with Airline AMER from DEN to LON ---
+The day of the flight is invalid. The month of the flight is invalid. The year of the flight is invalid. 
+
+--- Creating Section for DELTA with Seat Class economy
+Flight Section was successfully made!
+
+--- Creating Section for DELTA with Seat Class first
+Flight Section was successfully made!
+
+--- Creating Section for DELTA with Seat Class first
+This Flight Section was already created.
+
+--- Creating Section for SWSERTT with Seat Class economy
+SWSERTT is not in the system currently.
+
+--- Booking seat at airline DELTA for Seat 1 A ---
+Seat 1 A has successfully been booked.
+
+--- Booking seat at airline DELTA for Seat 1 A ---
+Seat 1 A has successfully been booked.
+
+--- Booking seat at airline DELTA for Seat 1 B ---
+Seat 1 B has successfully been booked.
+
+--- Booking seat at airline DELTA888 for Seat 1 A ---
+DELTA888 is not in the system currently.
+
+--- Booking seat at airline DELTA for Seat 1 A ---
+123haha7 does not match with any of the flight's ID.
+
+--- Booking seat at airline DELTA for Seat 1 A ---
+Seat 1 A has already been booked.
+
+--- Displaying System Details ---
+The following airports in the system are: 
+DEN
+DFW
+LON
+
+Airline DELTA with the following flights:
+Flight: DEN to LON.  On the date: 10 10 2019.
+Section: 123  Class: economy
+Seat Row: 2 Seat Columns: 2
+The following seats have been taken: 
+Seat 1 A
+Seat 1 B
+
+Section: 123  Class: first
+Seat Row: 2 Seat Columns: 3
+The following seats have been taken: 
+Seat 1 A
+
+
+Airline AMER with the following flights:
+
+Airline FRONT with the following flights:
+
+
+--- Searching for Avalible Flights from DEN to LON ---
+Seat 1 A  is avaliable for the requested flight!
+Flight 123 is avaliable
+
