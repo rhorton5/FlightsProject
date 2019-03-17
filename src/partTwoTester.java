@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class partTwoTester {
 
 	public static void main(String[] args) throws FileNotFoundException{
-		// TODO Auto-generated method stub
 		SystemManager sm = new SystemManager();
 		Scanner kb = new Scanner(System.in);
 		int choice = 0;
@@ -34,7 +33,6 @@ public class partTwoTester {
 			case 8: sm.changeAirlineSeatClassPrice(kb); break;
 			case 9: sm.changeFlightSectionPrice(kb); break;
 			case 10: sm.displaySystemDetails(); break;
-			case 11: //this is a test
 			}
 		}while(choice != 0);
 		System.out.println("Goodbye!");
