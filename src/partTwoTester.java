@@ -34,6 +34,7 @@ public class partTwoTester {
 			case 8: sm.changeAirlineSeatClassPrice(kb); break;
 			case 9: sm.changeFlightSectionPrice(kb); break;
 			case 10: sm.displaySystemDetails(); break;
+			case 11: //this is a test
 			}
 		}while(choice != 0);
 		System.out.println("Goodbye!");
