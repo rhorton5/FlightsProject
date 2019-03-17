@@ -80,12 +80,23 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 	public String getID() {
 		return this.id;
 	}
-	public void bookSeat(String flID, SeatClass s, int row, char col) {
+	public boolean bookSeat(String flID, SeatClass s, int row, char col) {
 		for(int i = 0; i < fs.size(); i++) {
 			if(this.fs.get(i).getID().equals(flID) && this.fs.get(i).getSeatClass().equals(s)) {
-				this.fs.get(i).bookSeat(row, col);
+				return this.fs.get(i).bookSeat(row, col);
 			}
 		}
+		System.out.println(flID + " was not found.");
+		return false;
+	}
+	public boolean bookSeatWithPreference(String flID, SeatClass s, String preference) {
+		for(int i = 0; i < fs.size(); i++) {
+			if(this.fs.get(i).getID().equals(flID) && this.fs.get(i).getSeatClass().equals(s)) {
+				return this.fs.get(i).bookSeatWithPreference(preference);
+			}
+		}
+		System.out.println(flID + " was not found.");
+		return false;
 	}
 	public boolean matchingAvaliableFlight(String orig, String dest, int year, int month, int day, SeatClass s) {
 		if(this.year != year || this.month != month || this.day != day) {
@@ -118,6 +129,9 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 			str += fs.get(fs.size() - 1).saveFile();
 		}
 		return str;
+	}
+	public String printOrigToDest() {
+		return "From: " + this.orig + " to " + this.dest;
 	}
 	@Override
 	public int compareTo(Travel o) {

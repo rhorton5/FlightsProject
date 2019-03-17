@@ -44,13 +44,13 @@ public class FlightSection{
 		
 	}
 	public int layoutSize(char layout) {
-		if(layout == 'S') {
+		if(layout == 'S' || layout == 's') {
 			return 3;
 		}
-		else if(layout == 'M') {
+		else if(layout == 'M' || layout == 'm') {
 			return 4;
 		}
-		else if(layout == 'W') {
+		else if(layout == 'W' || layout == 'w') {
 			return 10;
 		}
 		System.out.println("The column size is invalid");
@@ -82,15 +82,73 @@ public class FlightSection{
 	public int getPrice() {
 		return this.price;
 	}
-	public void bookSeat(int row, char cols) {
+	public boolean bookSeat(int row, char cols) {
 		int columns = (char)cols-intToCharNumber;
 		if(this.seats[row-1][columns-1].seatAvaliable()) {
 			this.seats[row-1][columns-1].takeSeat();
 			System.out.println("Seat " + row + " " + cols + " has successfully been booked.");
+			return true;
 		}
 		else {
 			System.out.println("Seat " + row + " " + cols + " has already been booked.");
+			return false;
 		}
+	}
+	public boolean bookSeatWithPreference(String preference) {
+		if(preference.equals("Window")){
+			return bookWindowSeats();
+		}
+		else if(preference.equals("Aisle")) {
+			return bookAisleSeats();
+		}
+		System.out.println("Invalid preference.");
+		return false;
+	}
+	private boolean bookAisleSeats() {
+		boolean booked = false;
+		int row = 1;
+		if(this.layout == 'S' || this.layout == 's') {
+			booked = bookSeat(row,'A');
+			if(booked == false) {
+				booked = bookSeat(row,'B');
+			}
+		}
+		else if(this.layout == 'M' || this.layout == 'm') {
+			booked = bookSeat(row,'B');
+			if(booked == false) {
+				booked = bookSeat(row,'C');
+			}
+		}
+		else if(this.layout == 'W' || this.layout == 'w') {
+			booked = bookSeat(row,'B');
+			int aisleSize = 0, curRow = 0;
+			char [] aisleSeats = {'C','D','H','I'};
+			while(booked == false && aisleSize != 0 && curRow != this.maxrow) {
+				booked = bookSeat(curRow,aisleSeats[aisleSize]);
+			}
+		}
+		else {
+			System.out.println("Layout doesn't exist.");
+			return false;
+		}
+		return booked;
+	}
+	private boolean bookWindowSeats() {
+		char curColumn = 'A';
+		boolean booked = false;
+		while(booked == false && curColumn != maxcol) {
+			booked = bookSeat(this.minrow,curColumn);
+			
+			if(booked == false) {
+				bookSeat(this.maxrow,curColumn);
+			}
+			
+			if(booked == false) {
+				curColumn++;
+			}
+			
+		}
+		return booked;
 	}
 	public boolean matchingAvaliableFlights(SeatClass s) {
 		if(!s.equals(this.seatclass)) {

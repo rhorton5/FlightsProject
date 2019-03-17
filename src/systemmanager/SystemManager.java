@@ -70,7 +70,98 @@ public class SystemManager extends createObjects{
 		}
 		setupTravel(kb,name,transport);		
 	}
-	public void createSection(Scanner kb) {
+	public void createTravelSection(Scanner kb) {
+		System.out.println("--- Creating Travel Section ---");
+		int choice;
+		String name = "",ID;
+		TransportService transport = null;
+		System.out.println("Select a transport type\n1). Flights\n2). Cruises");
+		do {
+			choice = kb.nextInt(); kb.nextLine();
+		}while(choice != 1 && choice != 2);
+		System.out.print("Enter the name of the transport service: ");
+		name = kb.nextLine();
+		if(choice == 1) {
+			if(checkAirline(name)) {
+				transport = getAirline(name);
+			}
+		}
+		else if(choice == 2) {
+			if(checkShips(name)) {
+				transport = getShips(name);
+			}
+		}
+		System.out.print("Enter the ID: ");
+		ID = kb.nextLine();
+		setupSection(transport.getType(),name,ID,kb);
+	}
+	public void setupSeatBooking(Scanner kb) {
+		int choice = 0; 
+		System.out.println("--- Book Seat ---");
+		do {
+			System.out.println("1). Book Seat based on seating preference");
+			System.out.println("2). Book Seat using actual seat location.");
+			System.out.print("Enter your choice: ");
+			choice = kb.nextInt(); kb.nextLine();
+		}while(choice != 1 && choice != 2);
+		if(choice == 1) {
+			setupBookingBySeatingPreference(kb);
+		}
+		else if(choice == 2) {
+			setupBookingBySeatLocation(kb);
+		}
+		else {
+			System.out.println("Choice was invalid");
+		}
+	}
+	private void setupBookingBySeatingPreference(Scanner kb) {
+		String name;
+		TransportService transport = null;
+		System.out.println("Select a transport type\n1). Flights\n2). Cruises");
+		int choice = 0;
+		do {
+			choice = kb.nextInt(); kb.nextLine();
+		}while(choice != 1 && choice != 2);
+		System.out.print("Enter the name of the transport service: ");
+		name = kb.nextLine();
+		if(choice == 1) {
+			if(checkAirline(name)) {
+				transport = getAirline(name);
+			}
+		}
+		else if(choice == 2) {
+			if(checkShips(name)) {
+				transport = getShips(name);
+			}
+		}
+		if(transport != null && !transport.getName().equals("")) {
+			transport.findSectionUsingPreference(kb);
+		}
+		
+	}
+	private void setupBookingBySeatLocation(Scanner kb) {
+		String name;
+		TransportService transport = null;
+		System.out.println("Select a transport type\n1). Flights\n2). Cruises");
+		int choice = 0;
+		do {
+			choice = kb.nextInt(); kb.nextLine();
+		}while(choice != 1 && choice != 2);
+		System.out.print("Enter the name of the transport service: ");
+		name = kb.nextLine();
+		if(choice == 1) {
+			if(checkAirline(name)) {
+				transport = getAirline(name);
+			}
+		}
+		else if(choice == 2) {
+			if(checkShips(name)) {
+				transport = getShips(name);
+			}
+		}
+		if(transport != null && !transport.getName().equals("")) {
+			transport.findSection(kb);
+		}
 		
 	}
 	private void setupTravel(Scanner kb,String name,TransportService transport) {
@@ -325,16 +416,16 @@ public class SystemManager extends createObjects{
 				int price,row;
 				SeatClass seatClass = SeatClass.economy;
 				
-				System.out.print("Select a layout:");
+				System.out.print("Select a layout(S,M,W):");
 				layout = kb.nextLine().charAt(0);
 				
-				System.out.print("Select a Seat Class: ");
+				System.out.print("Select a Seat Class (first,economy,business): ");
 				seatClass = seatClass.setSeatClass(kb.nextLine().toUpperCase().charAt(0));
 				
 				System.out.print("Enter a row size: ");
 				row = kb.nextInt(); kb.nextLine();
 				
-				System.out.print("Enter a price: ");
+				System.out.print("Enter a price (Type 0 to have default SeatClass price): ");
 				price = kb.nextInt(); kb.nextLine();
 				
 				createSection(name,id,row,layout,price,seatClass,type);
@@ -371,14 +462,26 @@ public class SystemManager extends createObjects{
 		}
 		System.out.println();
 	}
-	public void bookSeat(String air, String fl, SeatClass s, int row, char col) {
-		System.out.println("--- Booking seat at airline " + air + " for Seat " + row + " " + col + " ---");
-		if(checkAirline(air)) {
-			TransportService ts = getAirline(air);
-			ts.bookSeat(fl,s,row,col);
-			
+	private void bookSeat(String type, String air, String fl, SeatClass s, int row, char col) {
+		if(type.equals("Airline")) {
+			System.out.println("--- Booking seat at airline " + air + " for Seat " + row + " " + col + " ---");
+			if(checkAirline(air)) {
+				TransportService ts = getAirline(air);
+				ts.bookSeat(fl,s,row,col);
+			}
+		}else if(type.equals("Cruise Port")) {
+			System.out.println("--- Booking seat at cruise port " + air + " for Cabin " + row + " " + col + " ---");
+			if(checkShips(air)) {
+				TransportService ts = getShips(air);
+				ts.bookSeat(fl,s,row,col);
+			}
+		}else {
+			System.out.println("The type you chose is not supported.");
 		}
+		
 		System.out.println();
+		
+		
 	}
 	public void displaySystemDetails() {
 		System.out.println("--- Displaying System Details ---");
@@ -449,8 +552,6 @@ public class SystemManager extends createObjects{
 		while(!transport.isEmpty()) {
 			transport = loadTransportServiceInformation(transport.substring(0));
 		}
-		
-	
 	}
 	private String loadTransportServiceInformation(String transport) {
 		String airlineName = "", output = "";
