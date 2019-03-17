@@ -7,6 +7,7 @@ public class partTwoTester {
 		SystemManager sm = new SystemManager();
 		Scanner kb = new Scanner(System.in);
 		int choice = 0;
+		int tom = 3;
 		do {
 			System.out.println("--- Main Menu ---"
 								+ "\n1). Load a file to System Manager"
