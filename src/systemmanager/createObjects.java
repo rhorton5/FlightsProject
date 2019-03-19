@@ -7,28 +7,29 @@ import transportServiceClasses.TransportService;
 import transportServiceClasses.TransportServiceFactory;
 import java.util.LinkedList;
 import java.util.Scanner;
-public abstract class createObjects implements PortAbstractHelper, TransportServiceHelper{
+public abstract class createObjects implements TransportServiceHelper{
 	private Scanner kb = new Scanner(System.in);
-	public Port addPort(String n) {
-		System.out.println("What type is " + n + "?");
-		System.out.println("1). Airport\n2). Cruise Port");
-		int choice;
-		do {
-			choice = kb.nextInt(); kb.nextLine();
-		}while(choice != 1 && choice != 2);
-		switch(choice) {
-		case 1: return createPort("Airport",n);
-		case 2: return createPort("Cruise Port",n);
+	public Port addPort(String type,String n) {
+		
+		String choice = type;
+		while(!choice.toLowerCase().equals("airport") && !choice.toLowerCase().equals("cruise port")){
+			System.out.println("What type is " + n + "?");
+			System.out.print("Type Airport or Cruise Port: ");
+			choice = kb.nextLine();
+		}
+		switch(choice.toLowerCase()) {
+		case "airport": return createPort("Airport",n);
+		case "cruise port": return createPort("Cruise Port",n);
 		}
 		return createPort("Not Identified",n);
 	}
 	
 	public Port createPort(String type,String n) {
 		PortFactory portfactory = new PortFactory();
-		if(type.equals("Airport")) {
+		if(type.equalsIgnoreCase("Airport")) {
 			return portfactory.createAirport(n);
 		}
-		else if(type.equals("Cruise Port")) {
+		else if(type.equalsIgnoreCase("Cruise Port")) {
 			return portfactory.createPort("Cruise Port", n);
 		}
 			return portfactory.createPort("Airport", n);
@@ -42,21 +43,21 @@ public abstract class createObjects implements PortAbstractHelper, TransportServ
 		return list;
 	}
 	
-	public TransportService addTransportService(String n) {
-		return createTransportService(n);
+	public TransportService addTransportService(String type, String n) {
+		return createTransportService(type,n);
 	}
 	
-	public TransportService createTransportService(String n) {
+	public TransportService createTransportService(String type, String n) {
 		TransportServiceFactory tsf = new TransportServiceFactory();
-		int choice;
-		do {
+		String choice = type;
+		while(!choice.toLowerCase().equals("airline") && !choice.toLowerCase().equals("ship")){
 			System.out.println("What type is " + n + "?");
-			System.out.println("\n1). Airline\n2). Ship");//Extract to a single method.  Duplicate Code
-			choice = kb.nextInt(); kb.nextLine();
-		}while(choice != 1 && choice != 2);
-		switch(choice) {
-		case 1: return tsf.createAirline(n);
-		case 2: return tsf.createShip(n);
+			System.out.print("Type airline or ship");//Extract to a single method.  Duplicate Code
+			choice = kb.nextLine();
+		}
+		switch(choice.toLowerCase()) {
+		case "airline": return tsf.createAirline(n);
+		case "ship": return tsf.createShip(n);
 		}
 		return tsf.createAirline(n);
 	}

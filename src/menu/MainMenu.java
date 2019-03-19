@@ -3,14 +3,10 @@ package menu;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import systemmanager.SystemManager;
-import saveState.StateCareTaker;
-import saveState.Originator;
 
 public class MainMenu {
 	public static void mainMenu() throws FileNotFoundException{
 		SystemManager sm = new SystemManager();
-		StateCareTaker sct = new StateCareTaker();
-		Originator originator = new Originator();
 		
 		Scanner kb = new Scanner(System.in);
 		int choice = 0;

@@ -3,12 +3,12 @@ public class PortFactory extends PortCreator{
 
 	@Override 
 	public Port createPort(String type, String n){
-		if(type.equals("Airport")) {
+		if(type.equalsIgnoreCase("Airport")) {
 			Airport air = new Airport();
 			air.createAirport(n);
 			return air;
 		}
-		else if(type.equals("Cruise Port")) {
+		else if(type.equalsIgnoreCase("Cruise Port")) {
 			CruisePort cruise = new CruisePort();
 			cruise.createCruisePort(n);
 			return cruise;

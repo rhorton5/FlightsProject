@@ -142,11 +142,7 @@ public class FlightSection{
 			if(booked == false) {
 				bookSeat(this.maxrow,curColumn);
 			}
-			
-			if(booked == false) {
-				curColumn++;
-			}
-			
+			curColumn++;
 		}
 		return booked;
 	}

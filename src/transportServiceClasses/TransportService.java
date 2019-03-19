@@ -107,17 +107,21 @@ public abstract class TransportService extends TransportAbstract implements Comp
 	public abstract void changeFlightSectionPrice(Scanner kb);
 	
 	public void findSection(Scanner kb) {
-		String flID = super.findSectionID(this.flights,kb);
+		String ID = super.findSectionID(this.flights,kb);
+		boolean booked = findTravelToBook(ID, kb);
+		if(booked == false) {
+			System.out.println("Failed to find ID " + ID);
+		}
+	}
+	private boolean findTravelToBook(String ID, Scanner kb) {
 		boolean booked = false;
-		
-		for(int i = 0; i < flights.size(); i++) {
-			if(booked == true) {
-				break;
-			}
-			if(flights.get(i).getID().equals(flID)) {
-				booked = setupBookSeat(flights.get(i),flID,kb);
+		for(int i = 0; i < flights.size() && booked == false; i++) {
+			Travel travel = this.flights.get(i);
+			if(travel.getID().equals(ID)) {
+				booked = setupBookSeat(travel,ID,kb);
 			}
 		}
+		return booked;
 	}
 	public void findSectionUsingPreference(Scanner kb) {
 		String flID,preference;
@@ -147,28 +151,37 @@ public abstract class TransportService extends TransportAbstract implements Comp
 		SeatClass seatClass = super.selectSeatClass(kb);
 		Travel travel = super.getTravelUsingID(flID,this.flights);
 		booked = travel.bookSeatWithPreference(flID, seatClass, preference);
+		if(booked == false) {
+			System.out.println("Failed to book seat.");
+		}
 		
 	}
 	private boolean setupBookSeat(Travel travel, String flID, Scanner kb) {
-		int row;
-		char column;
-		
-		System.out.println("The following flights are avaliable ---\n" + travel.toString());
-		System.out.print("Enter your seat of choice (Type as row '' space '' columns)(Use 1-10 for rows and A-J for columns): ");
-		String seat = kb.nextLine();
 		SeatClass seatClass = super.selectSeatClass(kb);
+		String seat = typeColumnAndRow(travel,kb);
 		
 		try {
 			String [] temp = seat.split(" ");
-			column = temp[1].trim().charAt(0);
-			row = Integer.parseInt(temp[0].trim());
+			char column = setupColumn(temp[1]);
+			int row = setupRow(temp[0]);
+			return travel.bookSeat(flID, seatClass, row, column);
 		}catch(Exception e) {
 			System.out.println("Row and column was not properly typed.");
 			return setupBookSeat(travel,flID,kb);
 		}
-		
-		return travel.bookSeat(flID, seatClass, row, column);
-		
+	}
+	
+	private char setupColumn(String column) {
+		return column.toUpperCase().trim().charAt(0);
+	}
+	private int setupRow(String row) {
+		return Integer.parseInt(row.trim().substring(0,1));
+	}
+	private String typeColumnAndRow(Travel travel,Scanner kb) {
+		System.out.println("The following flights are avaliable ---\n" + travel.toString());
+		System.out.print("Enter your seat of choice (Type as row '' space '' columns)(Use 1-10 for rows and A-J for columns): ");
+		String seat = kb.nextLine();
+		return seat;
 	}
 
 }
