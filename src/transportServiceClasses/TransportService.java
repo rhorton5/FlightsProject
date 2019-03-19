@@ -1,7 +1,7 @@
 package transportServiceClasses;
 import java.util.LinkedList;
 import travelClasses.Travel;
-import travelsection.FlightSection;
+import travelsection.TravelSection;
 import travelsection.SeatClass;
 import java.util.Scanner; 
 public abstract class TransportService extends TransportAbstract implements Comparable<TransportService>{
@@ -56,14 +56,22 @@ public abstract class TransportService extends TransportAbstract implements Comp
 		}
 		return false;
 	}
-	public void addFlightSection(FlightSection fs) {
+	public void addTravelSection(TravelSection fs) {
+		if(flights.size() == 0) {
+			System.out.println("Cannot make a new section as there is nothing to add it to.");
+			return;
+		}
 		for(int i = 0; i < this.flights.size(); i++) {
 			if(this.flights.get(i).matchID(fs.getID())) {
-				this.flights.get(i).addFlightSection(fs);
+				this.flights.get(i).addTravelSection(fs);
 			}
 		}
 	}
 	public void bookSeat(String flID, SeatClass s, int row, char cols) {
+		if(flights.size() == 0) {
+			System.out.println("No sections were made, cannot book a seat.");
+			return;
+		}
 		for(int i = 0; i < flights.size(); i++) {
 			if(this.flights.get(i).getID().equals(flID)) {
 				flights.get(i).bookSeat(flID, s, row, cols);
@@ -76,7 +84,7 @@ public abstract class TransportService extends TransportAbstract implements Comp
 	public boolean matchingAvaliableFlight(String orig, String dest, int year, int month, int day, SeatClass s) {
 		for(int i = 0; i < this.flights.size(); i++) {
 			if(this.flights.get(i).matchingAvaliableFlight(orig, dest, year, month, day, s)) {
-				System.out.println("Flight " + this.flights.get(i).getID() + " is avaliable");
+				System.out.println(this.flights.get(i).getID() + " is avaliable on " + this.name + "!");
 				return true;
 			}
 		}
@@ -104,13 +112,13 @@ public abstract class TransportService extends TransportAbstract implements Comp
 		changeSeatClassPrice(kb);
 	}
 	
-	public abstract void changeFlightSectionPrice(Scanner kb);
+	public abstract void changeTravelSectionPrice(Scanner kb);
 	
 	public void findSection(Scanner kb) {
 		String ID = super.findSectionID(this.flights,kb);
 		boolean booked = findTravelToBook(ID, kb);
 		if(booked == false) {
-			System.out.println("Failed to find ID " + ID);
+			System.out.println("Failed to book for the following ID: " + ID);
 		}
 	}
 	private boolean findTravelToBook(String ID, Scanner kb) {
@@ -158,7 +166,7 @@ public abstract class TransportService extends TransportAbstract implements Comp
 	}
 	private boolean setupBookSeat(Travel travel, String flID, Scanner kb) {
 		SeatClass seatClass = super.selectSeatClass(kb);
-		String seat = typeColumnAndRow(travel,kb);
+		String seat = travel.typeColumnAndRow(kb);
 		
 		try {
 			String [] temp = seat.split(" ");
@@ -176,12 +184,6 @@ public abstract class TransportService extends TransportAbstract implements Comp
 	}
 	private int setupRow(String row) {
 		return Integer.parseInt(row.trim().substring(0,1));
-	}
-	private String typeColumnAndRow(Travel travel,Scanner kb) {
-		System.out.println("The following flights are avaliable ---\n" + travel.toString());
-		System.out.print("Enter your seat of choice (Type as row '' space '' columns)(Use 1-10 for rows and A-J for columns): ");
-		String seat = kb.nextLine();
-		return seat;
 	}
 
 }

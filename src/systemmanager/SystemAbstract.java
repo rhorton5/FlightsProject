@@ -6,33 +6,42 @@ import java.util.LinkedList;
 
 
 public class SystemAbstract extends createObjects{
-	public TransportService getTransportService(LinkedList <TransportService> airlines, LinkedList <TransportService> cruises, Scanner kb) {
+	public TransportService getTransportServiceType(LinkedList <TransportService> airlines, LinkedList <TransportService> cruises, Scanner kb) {
 		String name;
+		int a = 3;
+		String choice = selectTransportType(kb);
 		TransportService transport = null;
-		System.out.println("Select a transport type\n1). Flights\n2). Cruises");
-		int choice = 0;
-		do {
-			choice = kb.nextInt(); kb.nextLine();
-		}while(choice != 1 && choice != 2);
+		
 		
 		System.out.print("Enter the name of the transport service: ");
-		name = kb.nextLine();
-		if(choice == 1) {
+		name = kb.nextLine().toUpperCase();
+		
+		if(choice.equals("airline")) {
 			if(checkTransportService(name,airlines)) {
 				transport = getTransportService(name, airlines);
 			}
 		}
-		else if(choice == 2) {
+		else if(choice.equals("cruise line")) {
 			if(checkTransportService(name,cruises)) {
 				transport = getTransportService(name,cruises);
 			}
 		}
 		
 		if(transport == null) {
-			throw new IllegalArgumentException("Invalid type was found.  This error should not occur.");
+			return getTransportServiceType(airlines,cruises,kb);
 		}
 		
 		return transport;
+	}
+	private String selectTransportType(Scanner kb) {
+		String choice;
+		System.out.print("Select a transport type.");
+		
+		do {
+			System.out.print("Type either airline or cruise line: ");
+			choice = kb.nextLine().toLowerCase();
+		}while(!choice.equals("airline") && !choice.equals("cruise line"));
+		return choice;
 	}
 
 	public boolean checkTransportService(String name, LinkedList<TransportService> list) {
@@ -61,23 +70,28 @@ public class SystemAbstract extends createObjects{
 		return null;
 	}
 	public boolean checkOriginAndDestinaton(String orig, String dest,LinkedList <Port> ports) {
-		if(!ports.get(0).getType().equals("CruisePort")) {
+		if(ports == null) {
+			System.out.println("No ports were added.  Cannot check for matching locations.");
+			return false;
+		}
+		if(!ports.get(0).getType().equals("Cruise Port")) {
 			if(orig.equals(dest)) {
 				System.out.println("Orig and dest cannot be the same.");
+				return false;
 			}
 		}
-		
-		boolean origExists = false, destExists = false;
-		for(int i = 0; i < ports.size() && origExists != true || destExists != true; i++) {
-			Port port = ports.get(i);
-			if(port.getName().equals(orig)) {
-				origExists = true;
-			}
-			else if(port.getName().equals(dest)) {
-				destExists = true;
-			}
-		}
+		boolean origExists = checkLocation(orig,ports), destExists = checkLocation(dest,ports);
 		return origExists && destExists;	
+	}
+	private boolean checkLocation(String location, LinkedList <Port> ports) {
+		for(int i = 0; i < ports.size(); i++) {
+			Port port = ports.get(i);
+			if(port.getName().equals(location)) {
+				return true;
+				}
+		}
+		System.out.println(location + " does not exist in the system.");
+		return false;
 	}
 		
 }

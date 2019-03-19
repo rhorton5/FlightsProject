@@ -1,6 +1,5 @@
 package systemmanager;
 import airportClasses.Port;
-import airportClasses.PortAbstractHelper;
 import airportClasses.PortFactory;
 import transportServiceClasses.TransportServiceHelper;
 import transportServiceClasses.TransportService;
@@ -36,11 +35,7 @@ public abstract class createObjects implements TransportServiceHelper{
 	}
 	
 	public LinkedList <Port> addPortToList(Port air, LinkedList <Port> list) {
-		if(!air.duplicateCheck(list) && !air.getName().isEmpty()) {
-			list.add(air);
-			System.out.println(air.getName() + " was successfully added!");
-		}
-		return list;
+		return air.addPortToList(list);
 	}
 	
 	public TransportService addTransportService(String type, String n) {
@@ -50,28 +45,24 @@ public abstract class createObjects implements TransportServiceHelper{
 	public TransportService createTransportService(String type, String n) {
 		TransportServiceFactory tsf = new TransportServiceFactory();
 		String choice = type;
-		while(!choice.toLowerCase().equals("airline") && !choice.toLowerCase().equals("ship")){
-			System.out.println("What type is " + n + "?");
-			System.out.print("Type airline or ship");//Extract to a single method.  Duplicate Code
+		while(!choice.toLowerCase().equals("airline") && !choice.toLowerCase().equals("cruise line")){
+			System.out.println("What transport service type is " + n + "?");
+			System.out.print("Type airline or cruise line: ");
 			choice = kb.nextLine();
 		}
 		switch(choice.toLowerCase()) {
 		case "airline": return tsf.createAirline(n);
-		case "ship": return tsf.createShip(n);
+		case "cruise line": return tsf.createCruiseLine(n);
 		}
 		return tsf.createAirline(n);
 	}
 	
-	public LinkedList <TransportService> addTransportToSystem(TransportService air, LinkedList<TransportService> list){
-		if(!air.getName().isEmpty() && !air.hasDuplicateName(list)) {
-			list.add(air);
-			System.out.println(air.getName() + " was successfully added!");
+	public LinkedList <TransportService> addTransportToSystem(TransportService transport, LinkedList<TransportService> list){
+		if(!transport.getName().isEmpty() && !transport.hasDuplicateName(list)) {
+			list.add(transport);
+			System.out.println(transport.getName() + " was successfully added!");
 		}
 		return list;
-	}
-	public TransportService createFlightSection(Scanner kb, TransportService transport) {
-		
-		return transport;
 	}
 
 }

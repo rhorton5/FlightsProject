@@ -1,6 +1,6 @@
 package travelsection;
 import travelsection.SeatClass;
-public class FlightSection{
+public class TravelSection{
 	private SeatClass seatclass;
 	private Seat seats[][];
 	private String id;
@@ -11,7 +11,7 @@ public class FlightSection{
 	final int maxcol = 10, mincol = 1;
 	final int intToCharNumber = 64;
 	
-	public FlightSection() {
+	public TravelSection() {
 		this.seats = new Seat[1][1];
 		createSeats();
 	}
@@ -36,10 +36,12 @@ public class FlightSection{
 		this.id = flID;
 		this.row  = row;
 		this.layout = layout;
-		if(price == 0) {
+		if(price <= 0) {
 			this.price = this.seatclass.getPrice(s);
 		}
-		this.price = price;
+		else {
+			this.price = price;
+		}
 		createSeats();
 		
 	}
@@ -72,9 +74,9 @@ public class FlightSection{
 		System.out.println(this.id + " has changed from $" + this.price + " to $" + newPrice);
 		this.price = newPrice;
 	}
-	public boolean isDuplicateFlightSection(FlightSection fs) {
+	public boolean isDuplicateTravelSection(TravelSection fs) {
 		if(this.seatclass.equals(fs.getSeatClass())){
-			System.out.println("This Flight Section was already created.");
+			System.out.println("Section of this Seat Class was already created.");
 			return true;
 	}
 	return false;
@@ -107,40 +109,46 @@ public class FlightSection{
 	private boolean bookAisleSeats() {
 		boolean booked = false;
 		int row = 1;
-		if(this.layout == 'S' || this.layout == 's') {
-			booked = bookSeat(row,'A');
-			if(booked == false) {
+		while(booked == false && row < this.row) {
+			if(this.layout == 'S' || this.layout == 's') {
+				booked = bookSeat(row,'A');
+				if(booked == false) {
+					booked = bookSeat(row,'B');
+				}
+			}
+			else if(this.layout == 'M' || this.layout == 'm') {
 				booked = bookSeat(row,'B');
+				if(booked == false) {
+					booked = bookSeat(row,'C');
+				}
 			}
-		}
-		else if(this.layout == 'M' || this.layout == 'm') {
-			booked = bookSeat(row,'B');
-			if(booked == false) {
-				booked = bookSeat(row,'C');
+			else if(this.layout == 'W' || this.layout == 'w') {
+				booked = bookSeat(row,'B');
+				int aisleSize = 0, curRow = 0;
+				char [] aisleSeats = {'C','D','H','I'};
+				while(booked == false && aisleSize != 0 && curRow != this.maxrow) {
+					booked = bookSeat(curRow,aisleSeats[aisleSize]);
+				}
 			}
-		}
-		else if(this.layout == 'W' || this.layout == 'w') {
-			booked = bookSeat(row,'B');
-			int aisleSize = 0, curRow = 0;
-			char [] aisleSeats = {'C','D','H','I'};
-			while(booked == false && aisleSize != 0 && curRow != this.maxrow) {
-				booked = bookSeat(curRow,aisleSeats[aisleSize]);
+			else {
+				System.out.println("Layout doesn't exist.");
+				return false;
 			}
+			row++;
 		}
-		else {
-			System.out.println("Layout doesn't exist.");
-			return false;
-		}
+		
 		return booked;
 	}
 	private boolean bookWindowSeats() {
 		char curColumn = 'A';
 		boolean booked = false;
-		while(booked == false && curColumn != maxcol) {
-			booked = bookSeat(this.minrow,curColumn);
+		int curRow = 1;
+		while(booked == false && ((int)curColumn-64) < layoutSize(this.layout) && curRow < this.row) {
+			int curMaxRow = this.row-curRow+1;
+			booked = bookSeat(curRow,curColumn);
 			
 			if(booked == false) {
-				bookSeat(this.maxrow,curColumn);
+				bookSeat(curMaxRow,curColumn);
 			}
 			curColumn++;
 		}
@@ -153,9 +161,7 @@ public class FlightSection{
 		for(int i = 0; this.seats.length > i; i++) {
 			for(int j = 0; this.seats[i].length > j; j++) {
 				if(seats[i][j].seatAvaliable()) {
-					int temp = j + intToCharNumber + 1;
-					char letter = (char)temp;
-					System.out.println("Seat " + i + " " + letter + " " + " is avaliable for the requested flight for " + "$" + this.price + "!");
+					System.out.print("For the price of $" + this.price + ",");
 					return true;
 				}
 			}
@@ -164,7 +170,7 @@ public class FlightSection{
 	}
 	@Override
 	public String toString() {
-		String str = "Section: " + this.id + "  Class: " + this.seatclass + "\n";
+		String str = "Section: " + this.id + "  Class: " + this.seatclass + " Price: $" + this.price + "\n";
 		str += "Seat Row: " + this.seats.length + " Seat Columns: " + this.seats[0].length + "\n";
 		str += "The following seats have been taken: \n";
 		for(int i = 0; i < this.seats.length; i++) {

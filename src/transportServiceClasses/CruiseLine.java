@@ -1,24 +1,26 @@
 package transportServiceClasses;
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
 import travelClasses.Travel;
 import travelsection.SeatClass;
 
-import java.util.Scanner;
-import java.util.LinkedList;
-public class Airline extends TransportService{
-	public Airline() {
+public class CruiseLine extends TransportService {
+	public CruiseLine() {
 		super();
 	}
-	public void createAirline(String n) {
+	public void createCruiseLine(String n) {
 		super.createTransportService(n);
 	}
 	@Override
 	public String toString() {
-		String str = "Airline " + super.getName() + " with the following flights:\n";
+		String str = "CruiseLine " + super.getName() + " with the following CruiseLines:\n";
 		return str + super.toString();
 	}
 	@Override
 	public String getType() {
-		return "Airline";
+		return "Cruise Line";
 	}
 	public void changeSeatClassPrice(Scanner kb) {
 		LinkedList <Travel> travelList = super.getTravels();
@@ -41,7 +43,7 @@ public class Airline extends TransportService{
 		String TravelSectionID;
 		int price;
 		
-		System.out.print("Enter the flight section's ID: ");
+		System.out.print("Enter the cruise's section's ID: ");
 		TravelSectionID = kb.nextLine();
 		
 		System.out.print("Enter " + TravelSectionID + "'s new price: ");
@@ -54,6 +56,4 @@ public class Airline extends TransportService{
 		}
 		
 	}
-	
-
 }

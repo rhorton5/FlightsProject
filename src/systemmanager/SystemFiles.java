@@ -4,25 +4,28 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import airportClasses.Port;
 import transportServiceClasses.TransportService;
-import travelsection.SeatClass;
 
 import java.util.LinkedList;
 import java.util.Scanner;
-public class SystemFiles {
+public class SystemFiles extends LoadFile{
+	private String directory;
+	public SystemFiles() {
+		this.directory = new File("").getAbsolutePath() + "\\src\\savedFiles\\";
+	}
 	
-	File getFile(String fileName, Scanner kb) {
-		File file = new File(fileName);
+	String loadFile(String fileName, Scanner kb) throws FileNotFoundException{
+		File file = new File(this.directory + fileName);
 		if(!file.exists()) {
 			do {
-				System.out.println("The file was not found. Please enter a name for a file: ");
+				System.out.print("The file was not found.\nPlease enter a name for a file: ");
 				try {
 					file = new File(kb.nextLine());
 				}catch(Exception e) {
 					System.out.println("An error occured, please try again.");
 				}
-			}while(file.exists());
+			}while(!file.exists());
 		}
-		return file;
+		return super.loadFileFormat(file);
 	}
 	private PrintWriter getPrintWriter(File file) {
 		PrintWriter pw;
@@ -40,13 +43,12 @@ public class SystemFiles {
 			System.out.println("There is nothing to save.  Please make sure a port is added before saving your file.");
 			return;
 		}
-		PrintWriter pw = getPrintWriter(new File(fileName));
+		File file = new File(this.directory + fileName);
+		PrintWriter pw = getPrintWriter(file);
 		if(pw == null) {
 			return;
 		}
 		String str = formatString(ports,transport,pw);
-		
-		System.out.println(str);
 		pw.println(str);
 		pw.close();
 	}

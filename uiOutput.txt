@@ -1,0 +1,825 @@
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 1
+Please enter the file name (include file type (i.e. .txt)): flightSavedFile.txt
+--- Creating Port DEN---
+DEN was successfully added!
+
+--- Creating Port NYC---
+NYC was successfully added!
+
+--- Creating Port SEA---
+SEA was successfully added!
+
+--- Creating Port LAX---
+LAX was successfully added!
+
+--- Creating Transport Service AMER---
+AMER was successfully added!
+
+--- Creating Flight with Airline AMER from DEN to LAX ---
+Flight was added to AMER
+
+--- Creating Section for AMER with Seat Class economy ---
+Section was successfully made!
+
+--- Creating Section for AMER with Seat Class first ---
+Section was successfully made!
+
+--- Creating Flight with Airline AMER from LAX to DEN ---
+Flight was added to AMER
+
+--- Creating Section for AMER with Seat Class economy ---
+Section was successfully made!
+
+--- Creating Section for AMER with Seat Class first ---
+Section was successfully made!
+
+--- Creating Transport Service UNTD---
+UNTD was successfully added!
+
+--- Creating Flight with Airline UNTD from NYC to SEA ---
+Flight was added to UNTD
+
+--- Creating Section for UNTD with Seat Class economy ---
+Section was successfully made!
+
+--- Creating Section for UNTD with Seat Class first ---
+Section was successfully made!
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 11
+--- Displaying System Details ---
+The following airports in the system are: 
+DEN
+NYC
+SEA
+LAX
+
+Airline AMER with the following flights:
+Flight: DEN to LAX.  On the date: 10 8 2019.
+Section: AA1  Class: economy Price: $200
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA1  Class: first Price: $500
+Seat Row: 2 Seat Columns: 3
+The following seats have been taken: 
+
+Flight: LAX to DEN.  On the date: 8 9 2019.
+Section: AA2  Class: economy Price: $200
+Seat Row: 5 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA2  Class: first Price: $500
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline UNTD with the following flights:
+Flight: NYC to SEA.  On the date: 11 8 2019.
+Section: UA21  Class: economy Price: $300
+Seat Row: 6 Seat Columns: 3
+The following seats have been taken: 
+
+Section: UA21  Class: first Price: $800
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+The following cruises in the system are: 
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 3
+Enter the name of your port: SPO
+--- Creating Port SPO---
+What type is SPO?
+Type Airport or Cruise Port: airport
+SPO was successfully added!
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 4
+Name your transport service: SOUTH
+--- Creating Transport Service SOUTH---
+What transport service type is SOUTH?
+Type airline or cruise line: airline
+SOUTH was successfully added!
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 5
+--- Create Travel ---
+Select a transport type.Type either airline or cruise line: airline
+Enter the name of the transport service: SOUTH
+--- Find Perferred Travel ---
+List your starting location and destination (space the two out):SPO DEN
+Enter a flight ID: SO001
+Choose your date (use month/day/year):12/15/2020
+Enter the hour this will leave (Use military time, 0-23): 15
+Enter the minute this will leave: 01
+--- Creating Flight with Airline SOUTH from SPO to DEN ---
+Flight was added to SOUTH
+
+Would you like to create a section for SO001? (y/n): y
+Select a layout (S,M,W): s
+Select a Seat Class (first,economy,business): first
+Enter a row size: 4
+Enter a price (Type 0 to have default SeatClass price): 0
+--- Creating Section for SOUTH with Seat Class first ---
+Section was successfully made!
+
+Would you like to create another section? (y/n): n
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 6
+--- Creating Travel Section ---
+Select a transport type.Type either airline or cruise line: airline
+Enter the name of the transport service: SOUTH
+Enter the ID: SO001
+Would you like to create a section for SO001? (y/n): y
+Select a layout (S,M,W): w
+Select a Seat Class (first,economy,business): economy
+Enter a row size: 6
+Enter a price (Type 0 to have default SeatClass price): 200
+--- Creating Section for SOUTH with Seat Class economy ---
+Section was successfully made!
+
+Would you like to create another section? (y/n): n
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 7
+--- Find Perferred Flight ---
+List your starting location and destination (space the two out):SPO DEN
+Seat class you are looking for: first
+Choose your date (use month/day/year):12/15/2020
+--- Searching for Avalible Flights from SPO to DEN ---
+For the price of $200,SO001 is avaliable on SOUTH!
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 8
+--- Change Airline's Seat Class Price ---
+Enter the airline's name: SOUTH
+Enter the Seat Class you wish to change: first
+What is economy's new price: 20
+SO001 has changed from $200 to $20
+SOUTH's price was successfully changed!
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 11
+--- Displaying System Details ---
+The following airports in the system are: 
+DEN
+NYC
+SEA
+LAX
+SPO
+
+Airline AMER with the following flights:
+Flight: DEN to LAX.  On the date: 10 8 2019.
+Section: AA1  Class: economy Price: $200
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA1  Class: first Price: $500
+Seat Row: 2 Seat Columns: 3
+The following seats have been taken: 
+
+Flight: LAX to DEN.  On the date: 8 9 2019.
+Section: AA2  Class: economy Price: $200
+Seat Row: 5 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA2  Class: first Price: $500
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline UNTD with the following flights:
+Flight: NYC to SEA.  On the date: 11 8 2019.
+Section: UA21  Class: economy Price: $300
+Seat Row: 6 Seat Columns: 3
+The following seats have been taken: 
+
+Section: UA21  Class: first Price: $800
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline SOUTH with the following flights:
+Flight: SPO to DEN.  On the date: 12 15 2020.
+Section: SO001  Class: first Price: $300
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+
+Section: SO001  Class: economy Price: $20
+Seat Row: 6 Seat Columns: 10
+The following seats have been taken: 
+
+
+The following cruises in the system are: 
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 9
+--- Change Flight Section Price ---
+Enter the airline's name: SOUTH
+Enter the flight section's ID: SO001
+Enter SO001's new price: 400
+SO001 has changed from $300 to $400
+SO001 has changed from $20 to $400
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 11
+--- Displaying System Details ---
+The following airports in the system are: 
+DEN
+NYC
+SEA
+LAX
+SPO
+
+Airline AMER with the following flights:
+Flight: DEN to LAX.  On the date: 10 8 2019.
+Section: AA1  Class: economy Price: $200
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA1  Class: first Price: $500
+Seat Row: 2 Seat Columns: 3
+The following seats have been taken: 
+
+Flight: LAX to DEN.  On the date: 8 9 2019.
+Section: AA2  Class: economy Price: $200
+Seat Row: 5 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA2  Class: first Price: $500
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline UNTD with the following flights:
+Flight: NYC to SEA.  On the date: 11 8 2019.
+Section: UA21  Class: economy Price: $300
+Seat Row: 6 Seat Columns: 3
+The following seats have been taken: 
+
+Section: UA21  Class: first Price: $800
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline SOUTH with the following flights:
+Flight: SPO to DEN.  On the date: 12 15 2020.
+Section: SO001  Class: first Price: $400
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+
+Section: SO001  Class: economy Price: $400
+Seat Row: 6 Seat Columns: 10
+The following seats have been taken: 
+
+
+The following cruises in the system are: 
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 3
+Enter the name of your port: SAL
+--- Creating Port SAL---
+What type is SAL?
+Type Airport or Cruise Port: cruise port
+SAL was successfully added!
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 3
+Enter the name of your port: SAN
+--- Creating Port SAN---
+What type is SAN?
+Type Airport or Cruise Port: cruise port
+SAN was successfully added!
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 4
+Name your transport service: CARN
+--- Creating Transport Service CARN---
+What transport service type is CARN?
+Type airline or cruise line: cruise line
+CARN was successfully added!
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 5
+--- Create Travel ---
+Select a transport type.Type either airline or cruise line: cruise line
+Enter the name of the transport service: CARN
+--- Find Perferred Travel ---
+List your starting location and destination (space the two out):SAL SAN
+Enter a flight ID: CAR01
+Choose your date (use month/day/year):12/23/2021
+Enter the hour this will leave (Use military time, 0-23): 5
+Enter the minute this will leave: 23
+--- Creating Cruise with Cruise Port CARN from SAL to SAN ---
+Cruise trip was added to CARN
+
+Would you like to create a section for CAR01? (y/n): y
+Select a layout (S,M,W): w
+Select a Seat Class (first,economy,business): first
+Enter a row size: 3
+Enter a price (Type 0 to have default SeatClass price): 0
+--- Creating Section for CARN with Seat Class first ---
+Section was successfully made!
+
+Would you like to create another section? (y/n): n
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 6
+--- Creating Travel Section ---
+Select a transport type.Type either airline or cruise line: cruise line
+Enter the name of the transport service: CARN
+Enter the ID: CAR01
+Would you like to create a section for CAR01? (y/n): y
+Select a layout (S,M,W): m
+Select a Seat Class (first,economy,business): business
+Enter a row size: 2
+Enter a price (Type 0 to have default SeatClass price): 200
+--- Creating Section for CARN with Seat Class business ---
+Section was successfully made!
+
+Would you like to create another section? (y/n): n
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 10
+--- Book Seat ---
+1). Book Seat based on seating preference
+2). Book Seat using actual seat location.
+Enter your choice: 1
+Select a transport type.Type either airline or cruise line: airline
+Enter the name of the transport service: SOUTH
+Select a section listed below:
+SO001 || From: SPO to DEN
+Enter your choice: SO001
+Select the preference: 
+1). Window
+2). Aisle
+Enter your choice: 1
+Select a seat class (first,business,economic): 
+first
+Seat 1 A has successfully been booked.
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 10
+--- Book Seat ---
+1). Book Seat based on seating preference
+2). Book Seat using actual seat location.
+Enter your choice: 1
+Select a transport type.Type either airline or cruise line: cruise line
+Enter the name of the transport service: CARN
+Select a section listed below:
+CAR01 || From: SAL to SAN
+Enter your choice: CAR01
+Select the preference: 
+1). Window
+2). Aisle
+Enter your choice: 2
+Select a seat class (first,business,economic): 
+business
+Seat 1 B has successfully been booked.
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 11
+--- Displaying System Details ---
+The following airports in the system are: 
+DEN
+NYC
+SEA
+LAX
+SPO
+
+Airline AMER with the following flights:
+Flight: DEN to LAX.  On the date: 10 8 2019.
+Section: AA1  Class: economy Price: $200
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA1  Class: first Price: $500
+Seat Row: 2 Seat Columns: 3
+The following seats have been taken: 
+
+Flight: LAX to DEN.  On the date: 8 9 2019.
+Section: AA2  Class: economy Price: $200
+Seat Row: 5 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA2  Class: first Price: $500
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline UNTD with the following flights:
+Flight: NYC to SEA.  On the date: 11 8 2019.
+Section: UA21  Class: economy Price: $300
+Seat Row: 6 Seat Columns: 3
+The following seats have been taken: 
+
+Section: UA21  Class: first Price: $800
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline SOUTH with the following flights:
+Flight: SPO to DEN.  On the date: 12 15 2020.
+Section: SO001  Class: first Price: $400
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+Seat 1 A
+
+Section: SO001  Class: economy Price: $400
+Seat Row: 6 Seat Columns: 10
+The following seats have been taken: 
+
+
+The following cruises in the system are: 
+SAL
+SAN
+CruiseLine CARN with the following CruiseLines:
+Sail: SAL to SAN.  On the date: 12 23 2021.
+Section: CAR01  Class: first Price: $300
+Seat Row: 3 Seat Columns: 10
+The following seats have been taken: 
+
+Section: CAR01  Class: business Price: $200
+Seat Row: 2 Seat Columns: 4
+The following seats have been taken: 
+Seat 1 B
+
+
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 10
+--- Book Seat ---
+1). Book Seat based on seating preference
+2). Book Seat using actual seat location.
+Enter your choice: 2
+Select a transport type.Type either airline or cruise line: airline
+Enter the name of the transport service: SOUTH
+Select a section listed below:
+SO001 || From: SPO to DEN
+Enter your choice: SO001
+Select a seat class (first,business,economic): 
+first
+The following flights are avaliable ---
+Flight: SPO to DEN.  On the date: 12 15 2020.
+Section: SO001  Class: first Price: $400
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+Seat 1 A
+
+Section: SO001  Class: economy Price: $400
+Seat Row: 6 Seat Columns: 10
+The following seats have been taken: 
+
+
+Enter your seat of choice (Type as row '' space '' columns)(Use 1-10 for rows and A-J for columns): 2 C
+Seat 2 C has successfully been booked.
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 11
+--- Displaying System Details ---
+The following airports in the system are: 
+DEN
+NYC
+SEA
+LAX
+SPO
+
+Airline AMER with the following flights:
+Flight: DEN to LAX.  On the date: 10 8 2019.
+Section: AA1  Class: economy Price: $200
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA1  Class: first Price: $500
+Seat Row: 2 Seat Columns: 3
+The following seats have been taken: 
+
+Flight: LAX to DEN.  On the date: 8 9 2019.
+Section: AA2  Class: economy Price: $200
+Seat Row: 5 Seat Columns: 3
+The following seats have been taken: 
+
+Section: AA2  Class: first Price: $500
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline UNTD with the following flights:
+Flight: NYC to SEA.  On the date: 11 8 2019.
+Section: UA21  Class: economy Price: $300
+Seat Row: 6 Seat Columns: 3
+The following seats have been taken: 
+
+Section: UA21  Class: first Price: $800
+Seat Row: 3 Seat Columns: 3
+The following seats have been taken: 
+
+
+Airline SOUTH with the following flights:
+Flight: SPO to DEN.  On the date: 12 15 2020.
+Section: SO001  Class: first Price: $400
+Seat Row: 4 Seat Columns: 3
+The following seats have been taken: 
+Seat 1 A
+Seat 2 C
+
+Section: SO001  Class: economy Price: $400
+Seat Row: 6 Seat Columns: 10
+The following seats have been taken: 
+
+
+The following cruises in the system are: 
+SAL
+SAN
+CruiseLine CARN with the following CruiseLines:
+Sail: SAL to SAN.  On the date: 12 23 2021.
+Section: CAR01  Class: first Price: $300
+Seat Row: 3 Seat Columns: 10
+The following seats have been taken: 
+
+Section: CAR01  Class: business Price: $200
+Seat Row: 2 Seat Columns: 4
+The following seats have been taken: 
+Seat 1 B
+
+
+
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 2
+Please enter a name for your file: 
+finalOutput.txt
+File was successfully saved!
+--- Main Menu ---
+1). Load a file to System Manager
+2). Save transport information to a file
+3). Add port to System Manager
+4). Add transport service to System Manager
+5). Add flight or cruise trips to System Manager
+6). Add flight sections or cabin sections to System Manager
+7). Find avaliable seats on desired airline or cruise line
+8). Change price of a Seat Class of a desired airline or cruise line
+9). Change price of a section of a desired airline or cruise line
+10). Book a seat using seat preference or seat's location
+11). Display all objects in system
+0). Quit
+Please enter your choice: 0
+Goodbye!

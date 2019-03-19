@@ -18,11 +18,11 @@ public class MainMenu {
 								+ "\n4). Add transport service to System Manager"
 								+ "\n5). Add flight or cruise trips to System Manager"
 								+ "\n6). Add flight sections or cabin sections to System Manager"
-								+ "\n7). Find avaliable seats using seating preference"//Add the actual seating preference.
-								+ "\n8). Change price of a Seat Class of a desired airline"
-								+ "\n9). Change price of a flight section of a desired airline"
+								+ "\n7). Find avaliable seats on desired airline or cruise line"
+								+ "\n8). Change price of a Seat Class of a desired airline or cruise line"
+								+ "\n9). Change price of a section of a desired airline or cruise line"
 								+ "\n10). Book a seat using seat preference or seat's location"
-								+ "\n90). Display all objects in system"
+								+ "\n11). Display all objects in system"
 								+ "\n0). Quit");
 			System.out.print("Please enter your choice: ");
 			choice = kb.nextInt(); kb.nextLine();
@@ -35,9 +35,9 @@ public class MainMenu {
 			case 6: sm.createTravelSection(kb); break;
 			case 7: sm.findPerferredFlights(kb); break;
 			case 8: sm.changeAirlineSeatClassPrice(kb); break;
-			case 9: sm.changeFlightSectionPrice(kb); break;
+			case 9: sm.changeTravelSectionPrice(kb); break;
 			case 10: sm.setupSeatBooking(kb); break;
-			case 90:sm.displaySystemDetails(); break;
+			case 11:sm.displaySystemDetails(); break;
 			}
 			
 			

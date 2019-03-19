@@ -1,9 +1,10 @@
 package travelClasses;
 import java.util.LinkedList;
-import travelsection.FlightSection;
+import java.util.Scanner;
+import travelsection.TravelSection;
 import travelsection.SeatClass;
 public abstract class Travel extends TravelAbstracts implements Comparable <Travel>{
-	private LinkedList<FlightSection> fs;
+	private LinkedList<TravelSection> ts;
 	private String orig, dest, id;
 	private int day, month, year;
 	public Travel() {
@@ -13,7 +14,7 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 		this.day = 0;
 		this.month = 0;
 		this.year = 0;
-		this.fs = new LinkedList<FlightSection>();
+		this.ts = new LinkedList<TravelSection>();
 	}
 	public boolean hasAppropriateID(String ID) {
 		if(!ID.matches(".*[0-9].*") && !ID.matches("[a-zA-Z]+")) {
@@ -24,11 +25,27 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 	public boolean matchID(String ID) {
 		return this.id.equals(ID);
 	}
-	protected LinkedList<FlightSection> getFlightSection(){
-		return this.fs;
+	protected LinkedList<TravelSection> getTravelSection(){
+		return this.ts;
 	}
-	public abstract void changeSeatClassPrice(int price, SeatClass seatClass);
-	public abstract void changeFlightSectionPrice(int price, String flightSectionID);
+	public void changeSeatClassPrice(int price, SeatClass seatClass) {
+		LinkedList <TravelSection> flightSect = getTravelSection();
+		
+		for(int i = 0; i < flightSect.size(); i++) {
+			if(flightSect.get(i).getSeatClass().equals(seatClass)) {
+				flightSect.get(i).changePrice(price);
+			}
+		}
+		
+	}
+	public void changeTravelSectionPrice(int price, String TravelSectionID) {
+		LinkedList <TravelSection> flightSect = getTravelSection();
+		
+		for(int i = 0; i < flightSect.size(); i++) {
+			flightSect.get(i).changePrice(price);
+			
+		}
+	}
 	public abstract String getType();
 	public boolean hasAppropriateDates(int day, int month, int year) {
 		int maxDay = 32, minDay = 1, maxMonth = 12, minMonth = 1, minYear = 2019;
@@ -38,7 +55,7 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 			System.out.print("The day of the flight is invalid. ");
 			validFlight = false;
 		}
-		if(month >= maxMonth || month < minMonth) {
+		if(month > maxMonth || month < minMonth) {
 			System.out.print("The month of the flight is invalid. ");
 			validFlight = false;
 		}
@@ -74,25 +91,25 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 	public boolean validTravel() {
 		return !this.orig.isEmpty();
 	}
-	public void addFlightSection(FlightSection flightsection) {
-		super.addFlightSection(flightsection,fs);
+	public void addTravelSection(TravelSection TravelSection) {
+		super.addTravelSection(TravelSection,ts);
 	}
 	public String getID() {
 		return this.id;
 	}
 	public boolean bookSeat(String flID, SeatClass s, int row, char col) {
-		for(int i = 0; i < fs.size(); i++) {
-			if(this.fs.get(i).getID().equals(flID) && this.fs.get(i).getSeatClass().equals(s)) {
-				return this.fs.get(i).bookSeat(row, col);
+		for(int i = 0; i < ts.size(); i++) {
+			if(this.ts.get(i).getID().equals(flID) && this.ts.get(i).getSeatClass().equals(s)) {
+				return this.ts.get(i).bookSeat(row, col);
 			}
 		}
 		System.out.println(flID + " was not found.");
 		return false;
 	}
 	public boolean bookSeatWithPreference(String flID, SeatClass s, String preference) {
-		for(int i = 0; i < fs.size(); i++) {
-			if(this.fs.get(i).getID().equals(flID) && this.fs.get(i).getSeatClass().equals(s)) {
-				return this.fs.get(i).bookSeatWithPreference(preference);
+		for(int i = 0; i < ts.size(); i++) {
+			if(this.ts.get(i).getID().equals(flID) && this.ts.get(i).getSeatClass().equals(s)) {
+				return this.ts.get(i).bookSeatWithPreference(preference);
 			}
 		}
 		System.out.println(flID + " was not found.");
@@ -103,8 +120,8 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 			return false;
 		}
 		if(this.orig.equals(orig) && this.dest.equals(dest)) {
-			for(int i = 0; i < fs.size(); i++) {
-				if(this.fs.get(i).matchingAvaliableFlights(s)) {
+			for(int i = 0; i < ts.size(); i++) {
+				if(this.ts.get(i).matchingAvaliableFlights(s)) {
 					return true;
 				}
 			}
@@ -114,19 +131,19 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 	@Override
 	public String toString() {
 		String str = this.orig + " to " + this.dest + ".  On the date: " + this.month + " "+ this.day + " " + this.year + ".\n";
-		for(int i = 0; i < this.fs.size(); i++) {
-			str += this.fs.get(i).toString();
+		for(int i = 0; i < this.ts.size(); i++) {
+			str += this.ts.get(i).toString();
 		}
 		return str;
 	}
 	public String saveFile() {//Hour and minutes are currently placeholders.
 		String str = "";
 		str = this.id + "|" + this.year + ", " + this.month + ", " + this.day + ", " + 10 + ", " + 30 + " | " + this.orig + " | " + this.dest  + " [";
-		for(int i = 0; i < this.fs.size()-1; i++) {
-			 str += this.fs.get(i).saveFile() + ", "; 
+		for(int i = 0; i < this.ts.size()-1; i++) {
+			 str += this.ts.get(i).saveFile() + ", "; 
 		}
-		if(fs.size() != 0) {
-			str += fs.get(fs.size() - 1).saveFile();
+		if(ts.size() != 0) {
+			str += ts.get(ts.size() - 1).saveFile();
 		}
 		return str;
 	}
@@ -156,5 +173,12 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 			return res;
 		}
 		return o.year-this.year;
+	}
+	public String typeColumnAndRow(Scanner kb) {
+		System.out.println("The following flights are avaliable ---\n" + toString());
+		System.out.print(
+				"Enter your seat of choice (Type as row '' space '' columns)(Use 1-10 for rows and A-J for columns): ");
+		String seat = kb.nextLine();
+		return seat;
 	}
 }

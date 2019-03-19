@@ -1,7 +1,4 @@
 package travelClasses;
-import java.util.LinkedList;
-import travelsection.FlightSection;
-import travelsection.SeatClass;
 public class Flight extends Travel{
 	
 	Flight() {
@@ -17,27 +14,6 @@ public class Flight extends Travel{
 	@Override
 	public String getType() {
 		return "Flight";
-	}
-	public void changeSeatClassPrice(int price, SeatClass seatClass) {
-		LinkedList <FlightSection> flightSect = super.getFlightSection();
-		
-		for(int i = 0; i < flightSect.size(); i++) {
-			if(flightSect.get(i).getSeatClass().equals(seatClass)) {
-				flightSect.get(i).changePrice(price);
-			}
-		}
-		
-	}
-	@Override
-	public void changeFlightSectionPrice(int price, String flightSectionID) {
-		LinkedList <FlightSection> flightSect = super.getFlightSection();
-		
-		for(int i = 0; i < flightSect.size(); i++) {
-			flightSect.get(i).changePrice(price);
-			
-		}
-		
-		
 	}
 	
 

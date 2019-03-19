@@ -37,4 +37,11 @@ public abstract class Port implements Comparable <Port>{
 	public String getType() {
 		return "Generic Port";
 	}
+	public LinkedList<Port> addPortToList(LinkedList<Port> list) {
+		if (!duplicateCheck(list) && !getName().isEmpty()) {
+			list.add(this);
+			System.out.println(getName() + " was successfully added!");
+		}
+		return list;
+	}
 }

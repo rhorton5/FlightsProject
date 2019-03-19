@@ -8,9 +8,9 @@ public class TransportServiceFactory extends TransportServiceCreator{
 			al.createAirline(n);
 			return al;
 		}
-		else if(type.equals("Ship")){
-			Ship sp = new Ship();
-			sp.createShip(n);
+		else if(type.equals("Cruise Line")){
+			CruiseLine sp = new CruiseLine();
+			sp.createCruiseLine(n);
 			return sp;
 		}
 		return null;

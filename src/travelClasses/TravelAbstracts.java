@@ -1,20 +1,20 @@
 package travelClasses;
 
-import travelsection.FlightSection;
+import travelsection.TravelSection;
 import travelsection.SeatClass;
 import java.util.LinkedList;
 
 public abstract class TravelAbstracts {
 	
-	public LinkedList<FlightSection> addFlightSection(FlightSection flightsection, LinkedList<FlightSection> fs) {
-		if(checkForUniqueSection(flightsection,fs) && !hasDuplicateSeatClass(flightsection.getSeatClass(),fs)) {
-			fs.add(flightsection);
-			System.out.println("Flight Section was successfully made!");
+	public LinkedList<TravelSection> addTravelSection(TravelSection TravelSection, LinkedList<TravelSection> fs) {
+		if(checkForUniqueSection(TravelSection,fs) && !hasDuplicateSeatClass(TravelSection.getSeatClass(),fs)) {
+			fs.add(TravelSection);
+			System.out.println("Section was successfully made!");
 		}
 		return fs;
 			
 	}
-	private boolean hasDuplicateSeatClass(SeatClass s,LinkedList <FlightSection> fs) {
+	private boolean hasDuplicateSeatClass(SeatClass s,LinkedList <TravelSection> fs) {
 		for(int i = 0; i < fs.size(); i++) {
 			
 			if(fs.get(i).getSeatClass().equals(s)) {
@@ -24,9 +24,9 @@ public abstract class TravelAbstracts {
 		}
 		return false;
 	}
-	private boolean checkForUniqueSection(FlightSection flightsection,LinkedList <FlightSection> fs) {
+	private boolean checkForUniqueSection(TravelSection TravelSection,LinkedList <TravelSection> fs) {
 		for(int i = 0; i < fs.size(); i++) {
-			if(fs.get(i).isDuplicateFlightSection(flightsection)) {
+			if(fs.get(i).isDuplicateTravelSection(TravelSection)) {
 				return false;
 			}
 		}
