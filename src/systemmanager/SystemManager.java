@@ -33,7 +33,7 @@ public class SystemManager extends SystemAbstract{
 		System.out.println("--- Change Airline's Seat Class Price ---");
 		System.out.print("Enter the airline's name: ");
 		String airlineName = kb.nextLine();
-		if(!checkAirline(airlineName)) {
+		if(!super.checkTransportService(airlineName,this.airlines)) {
 			System.out.println("Airline " + airlineName + " does not exist.");
 			return;
 		}
@@ -122,17 +122,12 @@ public class SystemManager extends SystemAbstract{
 		if(exists == false) {
 			return;
 		}
-		if(transport.getType().equals("Airline")) {
-			createFlight(name,orig,dest,year,month,day,hour,minutes,flightID);
-			setupSection("Airline",name,flightID,kb);
-			
-		}
-		else if(transport.getType().equals("Cruise Line")) {
-			createSail(name,orig,dest,year,month,day,hour,minutes,flightID);
-			setupSection("Cruise Line",name,flightID,kb);
+		if(createTravel(transport.getType(),name,orig,dest,year,month,day,hour,minutes,flightID)) {
+			setupSection(transport.getType(),transport.getName(),flightID,kb);
 		}
 		else {
 			System.out.println("Something went wrong.  Flight/Sail failed.");
+			int a = 3;
 			return;
 		}
 		
@@ -140,7 +135,7 @@ public class SystemManager extends SystemAbstract{
 	public void changeTravelSectionPrice(Scanner kb) {
 		System.out.println("--- Change Flight Section Price ---");
 		System.out.print("Enter the airline's name: ");
-		String airlineName = kb.nextLine();//Push this to a new method ^  Duplicate Code
+		String airlineName = kb.nextLine();
 		if(!super.checkTransportService(airlineName,this.airlines)) {
 			System.out.println("Airline " + airlineName + " does not exists.");
 			return;
@@ -174,17 +169,14 @@ public class SystemManager extends SystemAbstract{
 		findAvailableFlights(orig,dest,year,month,day,seatClass);
 	}
 	public void createNewPort(String type, String n) {
-		System.out.println("--- Creating Port " + n + "---");
+		if(n.isEmpty()) {
+			System.out.println("Invalid parameters.");
+			return;
+		}
+		System.out.println("--- Creating Port " + n + " ---");
 		Port p = super.addPort(type,n);
-		if(p.getType().equals("Airport")) {
-			this.airports = super.addPortToList(p, this.airports);
-		}
-		else if(p.getType().equals("Cruise Port")){
-			this.cruisePorts = super.addPortToList(p, this.cruisePorts);
-		}
-		else {
-			System.out.println(n + "'s type is not supported on this system.");
-		}
+		LinkedList <Port> portType = findAppropriatePortType(p.getType());
+		super.addPortToList(p,portType);
 		
 		System.out.println();
 	}
@@ -203,72 +195,60 @@ public class SystemManager extends SystemAbstract{
 		
 		System.out.println();
 	}
-	void createFlight(String aname, String orig, String dest, int year, int month, int day, int hour, int minute, String id) {
-		System.out.println("--- Creating Flight with Airline " + aname + " from " + orig + " to " + dest + " ---");
-		if(super.checkTransportService(aname,this.airlines)) {
-			if(super.checkOriginAndDestinaton(orig, dest, this.airports)) {
-				TravelFactory tf = new TravelFactory();
-				Travel t = tf.createFlight(orig, dest, year, month, day, hour, minute, id);
-				if(t.validTravel()) {
-					addTravel(aname,t);
-				}
-			}
-		}
-		System.out.println();
-	}//Duplicate Code
-	private void createSail(String cname,String orig, String dest, int year, int month, int day, int hour, int minute, String id) {
-		System.out.println("--- Creating Cruise with Cruise Port " + cname + " from " + orig + " to " + dest + " ---");
-		if(super.checkTransportService(cname,this.cruiselines)) {
-			if(super.checkOriginAndDestinaton(orig, dest, this.cruisePorts)) {
-				TravelFactory tf = new TravelFactory();
-				Travel t = tf.createSail(orig, dest, year, month, day, hour, minute, id);
-				if(t.validTravel()) {
-					addSailTravel(cname,t);
-				}
-			}
-		}
-		System.out.println();
-	}
-	private boolean checkAirline(String aname) {
-		for(int i = 0; i < airlines.size(); i++) {
-			if(this.airlines.get(i).getName().equals(aname)) {
+	private boolean createTravel(String type,String name, String orig, String dest, int year, int month, int day, int hour, int minute, String id) {
+		System.out.println("--- Creating " + type + " " + name + " from " + " to " + dest + " ---");
+		LinkedList <TransportService> transportType = findAppropriateType(type);
+		if(super.checkTransportService(name,transportType)) {
+			TravelFactory tf = new TravelFactory();
+			Travel t = tf.createSail(orig, dest, year, month, day, hour, minute, id);
+			if(t.validTravel()) {
+				addTravel(type,name,t,transportType);
 				return true;
 			}
 		}
-		System.out.println(aname + " is not in the system currently.");
+		System.out.println(name + " has failed to create the desired travel.");
 		return false;
+		
 	}
-	
-	private void addTravel(String aname, Travel t) {
-		for(int i = 0; i < airlines.size(); i++) {
-			if(this.airlines.get(i).getName().equals(aname)) {
-				this.airlines.get(i).addFlight(t);
-				System.out.println("Flight was added to " + aname);
+	private LinkedList<TransportService> findAppropriateType(String type){
+		if(type.equalsIgnoreCase("Airline")) {
+			return this.airlines;
+		}
+		else if(type.equalsIgnoreCase("Cruise Line")) {
+			return this.cruiselines;
+		}
+		else {
+			System.out.println("Type is not supported");
+			return null;
+		}
+		
+	}
+	private LinkedList <Port> findAppropriatePortType(String type){
+		if(type.equalsIgnoreCase("Airport")) {
+			return this.airports;
+		}
+		else if(type.equalsIgnoreCase("Cruise Port")) {
+			return this.cruisePorts;
+		}
+		else {
+			System.out.println("Type is not supported");
+			return null;
+		}
+	}
+	private void addTravel(String type, String aname, Travel t, LinkedList<TransportService> transportType) {
+		for(int i = 0; i < transportType.size(); i++) {
+			if(transportType.get(i).getName().equals(aname)) {
+				transportType.get(i).addFlight(t);
+				System.out.println(t.getID() + " was added to " + aname);
 				return;
 			}
 		}
-	}
-	private void addSailTravel(String cname, Travel t) {
-		for(int i = 0; i < cruiselines.size(); i++) {
-			if(this.cruiselines.get(i).getName().equals(cname)) {
-				this.cruiselines.get(i).addFlight(t);
-				System.out.println("Cruise trip was added to " + cname);
-				return;
-			}
-		}
+		System.out.println("Failed to add " + aname);
 	}
 	private TransportService getAirline(String aname) {
 		for(int i = 0; i < airlines.size(); i++) {
 			if(this.airlines.get(i).getName().equals(aname)) {
 				return this.airlines.get(i);
-			}
-		}
-		return null;
-	}
-	private TransportService getcruiselines(String cname) {
-		for(int i = 0; i < cruiselines.size(); i++) {
-			if(this.cruiselines.get(i).getName().equals(cname)) {
-				return this.cruiselines.get(i);
 			}
 		}
 		return null;
@@ -287,7 +267,7 @@ public class SystemManager extends SystemAbstract{
 				SeatClass seatClass = SeatClass.economy;
 				
 				System.out.print("Select a layout (S,M,W): ");
-				layout = kb.nextLine().charAt(0);
+				layout = kb.nextLine().trim().charAt(0);
 				
 				System.out.print("Select a Seat Class (first,economy,business): ");
 				seatClass = seatClass.setSeatClass(kb.nextLine().toUpperCase().charAt(0));
@@ -298,7 +278,7 @@ public class SystemManager extends SystemAbstract{
 				System.out.print("Enter a price (Type 0 to have default SeatClass price): ");
 				price = kb.nextInt(); kb.nextLine();
 				
-				createSection(name,id,row,layout,price,seatClass,type);
+				createSection(type,id,row,layout,price,seatClass,type);
 				do {
 					System.out.print("Would you like to create another section? (y/n): ");
 					choice = kb.nextLine().toLowerCase().charAt(0);
@@ -309,22 +289,11 @@ public class SystemManager extends SystemAbstract{
 	}
 	public void createSection(String air, String flID, int row, char layout, int price, SeatClass s, String type) {
 		System.out.println("--- Creating Section for " + air + " with Seat Class " + s + " ---");
-		if(type.equals("Airline")) {
-			if(checkTransportService(air,this.airlines)) {
-				TransportService ts = getAirline(air);
-				TravelSection fs = new TravelSection();
-				fs.createSection(s, row, layout,flID,price);
-				ts.addTravelSection(fs);
-			}
-		}
-		else if(type.equals("Cruise Line")) {
-			if(checkTransportService(air,this.cruiselines)) {
-				TransportService ts = getcruiselines(air);
-				TravelSection fs = new TravelSection();
-				fs.createSection(s, row, layout, flID, price);
-				ts.addTravelSection(fs);
-			}
-		}
+		LinkedList <TransportService> transportType = findAppropriateType(type);
+		TransportService ts = super.getTransportService(air, transportType);
+		TravelSection fs = new TravelSection();
+		fs.createSection(s, row, layout,flID,price);
+		ts.addTravelSection(fs);
 		System.out.println();
 		
 	}
@@ -477,7 +446,7 @@ public class SystemManager extends SystemAbstract{
 			String orig = sf.getSection(travelLocations, "|");
 			String dest = travelLocations.substring(travelLocations.lastIndexOf("|")).replaceAll("[^A-Z]", "").trim();
 			
-			createFlight(airline, orig, dest, year, month, day, hour, minute, flightID);
+			createTravel("Airline",airline, orig, dest, year, month, day, hour, minute, flightID);
 			loadTravelSection(TravelSection,flightID,airline);
 		
 			

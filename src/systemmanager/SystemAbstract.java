@@ -8,7 +8,6 @@ import java.util.LinkedList;
 public class SystemAbstract extends createObjects{
 	public TransportService getTransportServiceType(LinkedList <TransportService> airlines, LinkedList <TransportService> cruises, Scanner kb) {
 		String name;
-		int a = 3;
 		String choice = selectTransportType(kb);
 		TransportService transport = null;
 		
