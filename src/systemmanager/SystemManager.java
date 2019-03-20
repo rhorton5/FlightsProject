@@ -290,10 +290,22 @@ public class SystemManager extends SystemAbstract{
 	public void createSection(String air, String flID, int row, char layout, int price, SeatClass s, String type) {
 		System.out.println("--- Creating Section for " + air + " with Seat Class " + s + " ---");
 		LinkedList <TransportService> transportType = findAppropriateType(type);
-		TransportService ts = super.getTransportService(air, transportType);
-		TravelSection fs = new TravelSection();
-		fs.createSection(s, row, layout,flID,price);
-		ts.addTravelSection(fs);
+		if(type.equals("Airline")) {
+			if(checkTransportService(air,this.airlines)) {
+				TransportService ts = super.getTransportService(air, this.airlines);
+				TravelSection fs = new TravelSection();
+				fs.createSection(s, row, layout,flID,price);
+				ts.addTravelSection(fs);
+			}
+		}
+		else if(type.equals("Cruise Line")) {
+			if(checkTransportService(air,this.cruiselines)) {
+				TransportService ts = super.getTransportService(air, this.cruiselines);
+				TravelSection fs = new TravelSection();
+				fs.createSection(s, row, layout, flID, price);
+				ts.addTravelSection(fs);
+			}
+		}
 		System.out.println();
 		
 	}
