@@ -37,7 +37,7 @@ public class SystemManager extends SystemAbstract{
 			System.out.println("Airline " + airlineName + " does not exist.");
 			return;
 		}
-		TransportService airline = getAirline(airlineName);
+		TransportService airline = super.getTransportService(airlineName, this.airlines);
 		airline.changeSeatClassPrice(kb);
 		System.out.println(airlineName + "'s price was successfully changed!");
 	}
@@ -78,27 +78,33 @@ public class SystemManager extends SystemAbstract{
 		if(transport != null && !transport.getName().equals("")) {
 			transport.findSectionUsingPreference(kb);
 		}
-		
 	}
-	private void setupBookingBySeatLocation(Scanner kb) {//*
+	private void setupBookingBySeatLocation(Scanner kb) {
 		TransportService transport = super.getTransportServiceType(this.airlines, this.cruiselines, kb);
 		if(transport != null && !transport.getName().equals("")) {
 			transport.findSection(kb);
 		}
 		
 	}
-	private LinkedList <Port> getPortByType(TransportService transport){
-		if(transport.getType().equals("Cruise Line")) {
+	private LinkedList<Port> findAssociatedPortType(String type){
+		if(type.equalsIgnoreCase("airline")) {
+			return this.airports;
+		}
+		else if(type.equalsIgnoreCase("cruise line")) {
 			return this.cruisePorts;
 		}
 		else {
-			return this.airports;
+			System.out.println("Type is not supported.");
+			return null;
 		}
 	}
 	private void setupTravel(Scanner kb,String name,TransportService transport) {
 		String orig, dest,flightID;
 		int year, month, day, hour, minutes;
-		LinkedList <Port> list = getPortByType(transport);
+		LinkedList <Port> list = findAssociatedPortType(transport.getType());
+		if(list == null) {
+			return;
+		}
 		
 		System.out.println("--- Find Perferred Travel ---");
 		System.out.print("List your starting location and destination (space the two out):");
@@ -127,7 +133,6 @@ public class SystemManager extends SystemAbstract{
 		}
 		else {
 			System.out.println("Something went wrong.  Flight/Sail failed.");
-			int a = 3;
 			return;
 		}
 		
@@ -144,7 +149,7 @@ public class SystemManager extends SystemAbstract{
 		airline.changeTravelSectionPrice(kb);
 	}
 	public void findPerferredFlights(Scanner kb) {
-		SeatClass seatClass;
+		SeatClass seatClass = SeatClass.economy;
 		String orig, dest;
 		int year, month, day;
 		
@@ -156,7 +161,7 @@ public class SystemManager extends SystemAbstract{
 		dest = arrayTemp[1].trim();
 		
 		System.out.print("Seat class you are looking for: ");
-		seatClass = setSeatClass(kb.nextLine().charAt(0));
+		seatClass = seatClass.setSeatClass(kb.nextLine().charAt(0));
 		
 		System.out.print("Choose your date (use month/day/year):");
 		String dates = kb.nextLine();
@@ -183,30 +188,32 @@ public class SystemManager extends SystemAbstract{
 	public void createTransport(String type, String n) {
 		System.out.println("--- Creating Transport Service " + n + "---");
 		TransportService ts = super.addTransportService(type,n);
-		if(ts.getType().equals("Airline")) {
-			this.airlines = super.addTransportToSystem(ts, this.airlines);
-		}
-		else if(ts.getType().equals("Cruise Line")) {
-			this.cruiselines = super.addTransportToSystem(ts, this.cruiselines);
-		}
-		else {
-			System.out.println(n + "'s type is not supported on this system.");
-		}
-		
+		LinkedList <TransportService> transportType = findAppropriateType(type);
+		super.addTransportToSystem(ts, transportType);
 		System.out.println();
 	}
 	private boolean createTravel(String type,String name, String orig, String dest, int year, int month, int day, int hour, int minute, String id) {
-		System.out.println("--- Creating " + type + " " + name + " from " + " to " + dest + " ---");
+		System.out.println("--- Creating " + type + " " + name + " from " + orig + " to " + dest + " ---");
 		LinkedList <TransportService> transportType = findAppropriateType(type);
+		Travel t;
 		if(super.checkTransportService(name,transportType)) {
 			TravelFactory tf = new TravelFactory();
-			Travel t = tf.createSail(orig, dest, year, month, day, hour, minute, id);
+			if(type.equalsIgnoreCase("Airline")) {
+				t = tf.createFlight(orig, dest, year, month, day, hour, minute, id);
+			}
+			else if(type.equalsIgnoreCase("Cruise Line")) {
+				t = tf.createSail(orig, dest, year, month, day, hour, minute, id);
+			}
+			else {
+				System.out.println(name + " is not supported.");
+				return false;
+			}
 			if(t.validTravel()) {
 				addTravel(type,name,t,transportType);
 				return true;
 			}
 		}
-		System.out.println(name + " has failed to create the desired travel.");
+		System.out.println(name + " has failed to be created.");
 		return false;
 		
 	}
@@ -223,7 +230,7 @@ public class SystemManager extends SystemAbstract{
 		}
 		
 	}
-	private LinkedList <Port> findAppropriatePortType(String type){
+	private LinkedList<Port> findAppropriatePortType(String type){
 		if(type.equalsIgnoreCase("Airport")) {
 			return this.airports;
 		}
@@ -244,14 +251,6 @@ public class SystemManager extends SystemAbstract{
 			}
 		}
 		System.out.println("Failed to add " + aname);
-	}
-	private TransportService getAirline(String aname) {
-		for(int i = 0; i < airlines.size(); i++) {
-			if(this.airlines.get(i).getName().equals(aname)) {
-				return this.airlines.get(i);
-			}
-		}
-		return null;
 	}
 	private void setupSection(String type,String name,String id,Scanner kb) {
 		char choice;
@@ -278,7 +277,7 @@ public class SystemManager extends SystemAbstract{
 				System.out.print("Enter a price (Type 0 to have default SeatClass price): ");
 				price = kb.nextInt(); kb.nextLine();
 				
-				createSection(type,id,row,layout,price,seatClass,type);
+				createSection(name,id,row,layout,price,seatClass,type);
 				do {
 					System.out.print("Would you like to create another section? (y/n): ");
 					choice = kb.nextLine().toLowerCase().charAt(0);
@@ -290,22 +289,10 @@ public class SystemManager extends SystemAbstract{
 	public void createSection(String air, String flID, int row, char layout, int price, SeatClass s, String type) {
 		System.out.println("--- Creating Section for " + air + " with Seat Class " + s + " ---");
 		LinkedList <TransportService> transportType = findAppropriateType(type);
-		if(type.equals("Airline")) {
-			if(checkTransportService(air,this.airlines)) {
-				TransportService ts = super.getTransportService(air, this.airlines);
-				TravelSection fs = new TravelSection();
-				fs.createSection(s, row, layout,flID,price);
-				ts.addTravelSection(fs);
-			}
-		}
-		else if(type.equals("Cruise Line")) {
-			if(checkTransportService(air,this.cruiselines)) {
-				TransportService ts = super.getTransportService(air, this.cruiselines);
-				TravelSection fs = new TravelSection();
-				fs.createSection(s, row, layout, flID, price);
-				ts.addTravelSection(fs);
-			}
-		}
+		TransportService ts = super.getTransportService(air, transportType);
+		TravelSection fs = new TravelSection();
+		fs.createSection(s,row,layout,flID,price);
+		ts.addTravelSection(fs);
 		System.out.println();
 		
 	}
@@ -343,17 +330,6 @@ public class SystemManager extends SystemAbstract{
 		loadFileToSystemManager(fileName,this,kb);
 		
 	}
-	public SeatClass setSeatClass(char letter) {
-		if(letter == 'F') {
-			return SeatClass.first;
-		}
-		else if(letter == 'B') {
-			return SeatClass.business;
-		}
-		else
-			return SeatClass.economy;
-	}
-	
 	public void saveSystemDetails(Scanner kb) throws FileNotFoundException{
 		System.out.println("Please enter a name for your file: ");
 		String fileName = kb.nextLine();
@@ -374,60 +350,42 @@ public class SystemManager extends SystemAbstract{
 				
 	}
 	private void createMultiplePorts(String [] ports) {
+		SystemFiles sf = new SystemFiles();
 		for(int i = 0; i < ports.length; i++) {
-			String temp = trimBrackets(ports, i);
+			String temp = sf.trimBrackets(ports, i);
 			createNewPort("Airport",temp);
 		}
 	}
-	private String trimBrackets(String[] ports, int i) {
-		String temp = ports[i];
-		if (ports[i].contains("]")) {
-			temp = temp.replace("]", "");
-		}
-		if (ports[i].contains("[")) {
-			temp = temp.replace("[", "");
-		}
-		return temp.trim();
-	}
+
 	private void createMultipleTransport(String transport) {
 		while(!transport.isEmpty()) {
 			transport = loadTransportServiceInformation(transport.substring(0));
 		}
 	}
 	private String loadTransportServiceInformation(String transport) {
+		SystemFiles sf = new SystemFiles();
 		String airlineName = "", output = "";
-		int rightBracket = 0, leftBracket = 0;
+		boolean cutTransport = false;
 		if(transport.length() < 10) {
 			return "";
 		}
 		if(transport.indexOf("[") <= 6) {
-			airlineName = transport.substring(0,transport.indexOf("[")).replaceAll("[^A-Z]", "");
-			transport = transport.substring(transport.indexOf("["));
+			airlineName = sf.getSection(transport, "[").replaceAll("[^A-Z]", "");
+			transport = sf.trimSection(transport, "[");
 			createTransport("Airline",airlineName);
-		
 		}
-		while(!transport.isEmpty()) {
-			if(transport.charAt(0) == '[') {
-				rightBracket++;
-			}
-			else if(transport.charAt(0) == ']') {
-				leftBracket++;
-			}
-			
-			output += transport.charAt(0);
-			transport = transport.substring(1);
-			if(output.equals("[]")) {
-				return "";
-			}
-			if(rightBracket == leftBracket || transport.isEmpty()) {
-				loadOutputInformation(output,airlineName);
+		while(cutTransport == false) {
+			output = sf.getTravel(transport, cutTransport);
+			cutTransport = true;
+		}
+		transport = sf.getTravel(transport, cutTransport);
+			if(!output.isEmpty()) {
+				loadOutputInformation(output,airlineName,sf);
 				return transport;
 			}
-		}
 		return transport;
 	}
-	private void loadOutputInformation(String output,String airline) {
-		SystemFiles sf = new SystemFiles();
+	private void loadOutputInformation(String output,String airline,SystemFiles sf) {
 		if(output.equals("[]")) {
 			return;
 		}
@@ -471,30 +429,25 @@ public class SystemManager extends SystemAbstract{
 		}
 		return flightID;
 	}
-	private String trimString(String str) {
-		int index = str.indexOf(":") + 1;
-		String result = str.substring(index).trim();
-		return result;
-	}
-	
-	
+
 	private void loadTravelSection(String TravelSectionInfo, String flightID, String airlineName) {
+		SystemFiles sf = new SystemFiles();
 		String [] strParts = TravelSectionInfo.replace("[", "").split(",");
+		SeatClass s = SeatClass.economy;
 		for(int i = 0; i < strParts.length; i++) {
 			strParts[i] = strParts[i].trim();
 			char seatClass = strParts[i].charAt(0);
-			strParts[i] = trimString(strParts[i]);
+			strParts[i] = sf.trimString(strParts[i]);
 			
 			int price = Integer.parseInt(strParts[i].substring(0,strParts[i].indexOf(":")));
-			strParts[i] = trimString(strParts[i]);
+			strParts[i] = sf.trimString(strParts[i]);
 			
 			char layout = strParts[i].charAt(0);
-			strParts[i] = trimString(strParts[i]);
-			
+			strParts[i] = sf.trimString(strParts[i]);
 			
 			int rows = Integer.parseInt(strParts[i].trim());
 			
-			SeatClass s = setSeatClass(seatClass);
+			s = s.setSeatClass(seatClass);
 			createSection(airlineName,flightID,rows,layout,price,s,"Airline");
 		}
 	}

@@ -19,8 +19,8 @@ public class MainMenu {
 								+ "\n5). Add flight or cruise trips to System Manager"
 								+ "\n6). Add flight sections or cabin sections to System Manager"
 								+ "\n7). Find avaliable seats on desired airline or cruise line"
-								+ "\n8). Change price of a Seat Class of a desired airline or cruise line"
-								+ "\n9). Change price of a section of a desired airline or cruise line"
+								+ "\n8). Change price of a Seat Class of a desired airline"
+								+ "\n9). Change price of a section of a desired airline"
 								+ "\n10). Book a seat using seat preference or seat's location"
 								+ "\n11). Display all objects in system"
 								+ "\n0). Quit");
@@ -39,9 +39,6 @@ public class MainMenu {
 			case 10: sm.setupSeatBooking(kb); break;
 			case 11:sm.displaySystemDetails(); break;
 			}
-			
-			
-			
 		}while(choice != 0);
 		System.out.println("Goodbye!");
 	}

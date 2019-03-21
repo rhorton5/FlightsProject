@@ -44,6 +44,9 @@ public class SystemAbstract extends createObjects{
 	}
 
 	public boolean checkTransportService(String name, LinkedList<TransportService> list) {
+		if(list == null || name.isEmpty()) {
+			System.out.println("Invalid paramters.");
+		}
 		for(int i = 0; i < list.size(); i++) {
 			TransportService cur = list.get(i);
 			if(cur.getName().equals(name)) {
