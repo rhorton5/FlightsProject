@@ -1,6 +1,6 @@
 package travelsection;
 import travelsection.SeatClass;
-public class TravelSection{
+public class TravelSection implements Comparable <TravelSection>{
 	private SeatClass seatclass;
 	private Seat seats[][];
 	private String id;
@@ -75,7 +75,7 @@ public class TravelSection{
 		this.price = newPrice;
 	}
 	public boolean isDuplicateTravelSection(TravelSection fs) {
-		if(this.seatclass.equals(fs.getSeatClass())){
+		if(compareTo(fs) == 0){
 			System.out.println("Section of this Seat Class was already created.");
 			return true;
 	}
@@ -184,6 +184,10 @@ public class TravelSection{
 	public String saveFile() {
 		String str = this.seatclass.getClassType(this.seatclass) + ": " + this.price + ": " + this.layout + ": " + this.row;
 		return str;
+	}
+	@Override
+	public int compareTo(TravelSection o) {
+		return o.seatclass.compareTo(this.seatclass);
 	}
 
 }

@@ -181,4 +181,12 @@ public abstract class Travel extends TravelAbstracts implements Comparable <Trav
 		String seat = kb.nextLine();
 		return seat;
 	}
+	public boolean isDuplicateTravelSection(TravelSection travelsect) {
+		for(int i = 0; i < ts.size(); i++) {
+			if(ts.get(i).compareTo(travelsect) == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

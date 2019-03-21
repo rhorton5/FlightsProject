@@ -1,6 +1,7 @@
 package systemmanager;
 import transportServiceClasses.TransportService;
 import airportClasses.Port;
+import travelClasses.Travel;
 import java.util.Scanner;
 import java.util.LinkedList;
 
@@ -93,6 +94,16 @@ public class SystemAbstract extends createObjects{
 				}
 		}
 		System.out.println(location + " does not exist in the system.");
+		return false;
+	}
+	public boolean isDuplicateTravel(Travel t, LinkedList <Travel> list) {
+		for(int i = 0; i < list.size(); i++) {
+			Travel temp = list.get(i);
+			if(temp.compareTo(t) == 0) {
+				System.out.println("This travel already exists");
+				return true;
+			}
+		}
 		return false;
 	}
 		

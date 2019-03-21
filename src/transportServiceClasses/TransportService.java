@@ -62,10 +62,12 @@ public abstract class TransportService extends TransportAbstract implements Comp
 			return;
 		}
 		for(int i = 0; i < this.flights.size(); i++) {
-			if(this.flights.get(i).matchID(fs.getID())) {
+			if(this.flights.get(i).matchID(fs.getID()) && !this.flights.get(i).isDuplicateTravelSection(fs)) {
 				this.flights.get(i).addTravelSection(fs);
+				return;
 			}
 		}
+		System.out.println("The travel section failed to load.");
 	}
 	public void bookSeat(String flID, SeatClass s, int row, char cols) {
 		if(flights.size() == 0) {

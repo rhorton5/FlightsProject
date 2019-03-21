@@ -8,14 +8,19 @@ import transportServiceClasses.TransportService;
 import java.util.LinkedList;
 import java.util.Scanner;
 public class SystemFiles extends LoadFile{
-	private String directory;
+	private String directory,altDirectory;
 	public SystemFiles() {
 		this.directory = new File("").getAbsolutePath() + "\\src\\savedFiles\\";
+		this.altDirectory = new File("").getAbsolutePath() + "\\savedFiles\\";//Some IDE adds src folder and others don't as the Absolute Path.
 	}
 	
 	String loadFile(String fileName, Scanner kb) throws FileNotFoundException{
 		File file = new File(this.directory + fileName);
 		if(!file.exists()) {
+			file = new File(this.altDirectory + fileName);
+			if(file.exists()) {
+				return super.loadFileFormat(file);
+			}
 			do {
 				System.out.print("The file was not found.\nPlease enter a name for a file: ");
 				try {

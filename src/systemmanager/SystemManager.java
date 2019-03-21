@@ -245,6 +245,7 @@ public class SystemManager extends SystemAbstract{
 	private void addTravel(String type, String aname, Travel t, LinkedList<TransportService> transportType) {
 		for(int i = 0; i < transportType.size(); i++) {
 			if(transportType.get(i).getName().equals(aname)) {
+				if(!super.isDuplicateTravel(t, transportType.get(i).getTravels()))
 				transportType.get(i).addFlight(t);
 				System.out.println(t.getID() + " was added to " + aname);
 				return;
